@@ -5,7 +5,7 @@ using namespace std;
 
 class FileLoader {
 private:
-    char* fileContent;
+    uint8_t* fileContent;
     int filesize;
 
     bool checkFile();
@@ -13,5 +13,6 @@ private:
 public:
     FileLoader();
     bool loadFile(const char* filePath);
-    char* getFileContent();
+    uint8_t* getFileContent();
+    ~FileLoader();
 };
