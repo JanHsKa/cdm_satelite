@@ -5,7 +5,12 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    Controller controller = Controller(argv[1]);
-    controller.run();
+    if (argc > 1) {
+        Controller controller = Controller(argv[1]);
+        controller.run();
+    } else {
+        cout<<"No file was parsed"<<endl;
+    }
+    
     return 0;
 }
