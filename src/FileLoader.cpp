@@ -51,7 +51,8 @@ uint8_t* FileLoader::getFileContent() {
         copy[i] = fileContent[i];
     }
 
-    return copy;
+    return fileContent;
+    //return copy;
 }
 
 FileLoader::~FileLoader(){

@@ -5,7 +5,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    FileLoader* file = new FileLoader();
-    Controller* controller = new Controller(argv[1]);
+    Controller controller = Controller(argv[1]);
+    controller.run();
     return 0;
 }
