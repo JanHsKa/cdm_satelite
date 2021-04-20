@@ -3,6 +3,7 @@
 Processor::Processor() {
     vector<Satellite> new_vector;
     satellites = new_vector;
+    generator = new GoldCodeGenerator();
 }
 
 
@@ -18,11 +19,9 @@ vector<Satellite> Processor::decode() {
 
 void Processor::createSatellites() {
     for (auto i = 0; i < SATELLITE_COUNT; i++) {
-        cout<<"index  "<<i<<endl;
         Satellite satellite;
         satellite.id = i + 1;
-        satellite.chipSequence = generator.generate(REGISTER_PAIRS[i][0], REGISTER_PAIRS[i][1]);
-        cout<<"push_back"<<endl;
+        satellite.chipSequence = generator->generate(REGISTER_PAIRS[i][0], REGISTER_PAIRS[i][1]);
         satellites.push_back(satellite);
     }
 

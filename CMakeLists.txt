@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(cdm_satelite
+project(cdm_satellite
     VERSION 1.0
     DESCRIPTION "embedded Software Labor Task 3"
-    LANGUAGES CXX
+    #LANGUAGES CXX
 )
 
 include(CTest)
@@ -19,7 +19,7 @@ add_library(lib STATIC ${source_list})
 target_include_directories(lib PUBLIC include)
 
 
-add_executable(cdm_satelite main.cpp)
-target_link_libraries(cdm_satelite lib)
+add_executable(cdm_satellite main.cpp)
+target_link_libraries(cdm_satellite lib)
 
 

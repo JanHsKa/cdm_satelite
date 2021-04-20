@@ -1,17 +1,13 @@
 #include "GoldCodeGenerator.h"
 
-GoldCodeGenerator::GoldCodeGenerator() {
-    g1 = new ShiftRegister {
-        0b1111111111,
-        {0b0010000000, 0b0010000000},
-        {0b0000000001},
-    };
+GoldCodeGenerator::GoldCodeGenerator():g1(new ShiftRegister), g2(new ShiftRegister) {
+    g1->registerBits = 0b1111111111;
+    g1->shiftBits = {0b0010000000, 0b0010000000};
+    g1->resultBits = {0b1111111111};
 
-    g2 = new ShiftRegister {
-        0b1111111111,
-        {0b0100000000, 0b0010000000, 0b0000010000, 0b0000000100, 0b0000000010, 0b0000000001},
-        {}
-    };
+    g2->registerBits = 0b1111111111;
+    g2->shiftBits = {0b0100000000, 0b0010000000, 0b0000010000, 0b0000000100, 0b0000000010, 0b0000000001};
+    g2->resultBits = {};
 }
 
 
@@ -22,20 +18,19 @@ vector<uint8_t> GoldCodeGenerator::generate(uint16_t first, uint16_t second) {
     reset();
     cout<<"1"<<endl;
     g2->resultBits.push_back(first);
+    cout<<"1,2"<<endl;
+
     g2->resultBits.push_back(second);
     cout<<"2"<<endl;
 
     for (auto i = 0; i <= SIGNALSIZE; i++) {
-        codeArray[1];
+        codeArray[get_next_bit()];
     }
-
-    cout<<"end generate"<<endl;
     return code;
 }
 
 
 uint8_t GoldCodeGenerator::get_next_bit() {
-    cout<<"get next";
     return shift(g1) ^ shift(g2);
 }
 

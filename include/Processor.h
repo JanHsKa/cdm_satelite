@@ -18,7 +18,7 @@ class Processor {
 private:
     int8_t signalData[SIGNALSIZE];
     vector<Satellite> satellites;
-    GoldCodeGenerator generator;
+    GoldCodeGenerator* generator;
 
     void createSatellites();
     
