@@ -20,6 +20,7 @@ private:
 
     uint8_t get_next_bit();
     uint8_t shift(ShiftRegister *shiftRegister);
+    uint16_t applyBitmasks(vector<uint16_t> bitmasks, uint16_t registerBits);
 
 public:
     GoldCodeGenerator();

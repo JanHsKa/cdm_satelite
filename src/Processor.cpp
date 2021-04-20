@@ -9,10 +9,8 @@ Processor::Processor() {
 
 
 vector<Satellite> Processor::decode() {
-    cout<<"!start decode"<<endl;
     vector<Satellite> result;
     createSatellites();
-    cout<<"!finish decode"<<endl;
 
     return result;
 }
@@ -29,7 +27,6 @@ void Processor::createSatellites() {
 }
 
 bool Processor::loadFile(const char* filePath) {
-    cout<<"start loading"<<endl;
     FILE* file = fopen(filePath, "r");
 
     if(file == NULL) {
@@ -40,12 +37,6 @@ bool Processor::loadFile(const char* filePath) {
     fseek(file, 0, SEEK_END);
     long fileSize = ftell(file);
     rewind(file);
-
-    /* if (fileSize > 1023) {
-        printf("File is to large to read \n");
-        printf(" %d Filesize", fileSize);
-        return false;
-    } */
 
     char* fileBuffer = (char*)malloc(sizeof(char) * fileSize);
 
@@ -69,7 +60,7 @@ bool Processor::loadFile(const char* filePath) {
             nextNegative = false;
         } else {
             if (index >= SIGNALSIZE) {
-                cout<<"to big   "<<i<<endl;
+                 printf("File is to large to read \n");
                 return false;
             }
             signalData[index] = entry - '0';

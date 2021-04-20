@@ -10,26 +10,18 @@ GoldCodeGenerator::GoldCodeGenerator():g1(new ShiftRegister), g2(new ShiftRegist
     g2->resultBits = {};
 }
 
-
 vector<uint8_t> GoldCodeGenerator::generate(uint16_t first, uint16_t second) {
     vector<uint8_t> code;
-    cout<<"generate"<<endl;
     reset();
-    cout<<"1"<<endl;
-    g2->resultBits.push_back(first);
-    cout<<"1,2"<<endl;
-
-    g2->resultBits.push_back(second);
-    cout<<"2"<<endl;
-    uint8_t safe;
+    g2->resultBits.push_back(1 << (10 - first));
+    g2->resultBits.push_back(1 << (10 - second));
 
     for (auto i = 0; i <= SIGNALSIZE; i++) {
-        safe = get_next_bit();
-        code.push_back(safe);
+        code.push_back(get_next_bit());
     }
+
     return code;
 }
-
 
 uint8_t GoldCodeGenerator::get_next_bit() {
     uint8_t shift1 = shift(g1);
@@ -38,33 +30,29 @@ uint8_t GoldCodeGenerator::get_next_bit() {
     return shift1 ^ shift2;
 }
 
-
 uint8_t GoldCodeGenerator::shift(ShiftRegister *shiftRegister) {
-    uint8_t resultBit = 0;
+    uint8_t resultBit = (uint8_t)applyBitmasks(shiftRegister->resultBits, shiftRegister->registerBits);
+    uint16_t shiftBit = applyBitmasks(shiftRegister->shiftBits, shiftRegister->registerBits);
+
+
+    shiftRegister->registerBits >>= 1;
+    shiftRegister->registerBits |= shiftBit << 9;
+
+    return resultBit;
+}
+
+uint16_t GoldCodeGenerator::applyBitmasks(vector<uint16_t> bitmasks, uint16_t registerBits) {
+    uint16_t resultBit = 0;
     uint16_t helpBit = 0;
-    uint16_t shiftBit = 0;
 
 
-    for (auto bitmask : shiftRegister->resultBits) {
-         helpBit = shiftRegister->registerBits & bitmask;
-         while (helpBit > 2) {
+    for (auto bitmask : bitmasks) {
+         helpBit = registerBits & bitmask;
+         while (helpBit >= 2) {
              helpBit >>= 1;
          }
          resultBit ^= helpBit;
     }
-
-    helpBit = 0;
-
-    for (auto bitmask : shiftRegister->shiftBits) {
-        helpBit ^= shiftRegister->registerBits & bitmask;
-        while (helpBit > 2) {
-             helpBit >>= 1;
-         }
-
-         shiftBit ^= helpBit;
-    }
-
-    shiftRegister->registerBits |= shiftBit << 9;
 
     return resultBit;
 }
