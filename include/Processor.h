@@ -3,20 +3,22 @@
 #include <vector>
 #include <map>
 #include "GoldCodeGenerator.h"
+#include "SatelliteConfig.h"
 
 using namespace std;
 
 struct Satellite {
     uint8_t sentBit;
-    uint8_t id;
+    int id;
     uint16_t delta;
-    uint8_t signalCode[SIGNALSIZE];
+    vector<uint8_t> chipSequence;
 };
 
 class Processor {
 private:
-    uint8_t signalData[SIGNALSIZE];
-    Satellite satellites[24];
+    int8_t signalData[SIGNALSIZE];
+    vector<Satellite> satellites;
+    GoldCodeGenerator generator;
 
     void createSatellites();
     

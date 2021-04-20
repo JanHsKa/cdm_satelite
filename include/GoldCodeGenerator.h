@@ -24,5 +24,7 @@ private:
 public:
     GoldCodeGenerator();
     vector<uint8_t> generate(uint16_t first, uint16_t second);
+    void reset();
+    ~GoldCodeGenerator();
 
 };

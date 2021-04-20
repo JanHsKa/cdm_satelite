@@ -6,8 +6,12 @@ project(cdm_satelite
     LANGUAGES CXX
 )
 
-set(CMAKE_CXX_STANDARD 17) 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+include(CTest)
+enable_testing()
+
+set(CMAKE_BUILD_TYPE Debug)
+#set(CMAKE_CXX_STANDARD 17) 
+#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
 file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/src/*.cpp")

@@ -16,23 +16,26 @@ GoldCodeGenerator::GoldCodeGenerator() {
 
 
 vector<uint8_t> GoldCodeGenerator::generate(uint16_t first, uint16_t second) {
-    vector<uint8_t> code;
-
-    g1->registerBits = 0b1111111111;
-    g2->registerBits = 0b1111111111;
-
+    vector<uint8_t> code(1023);
+    uint8_t* codeArray[1023]; 
+    cout<<"generate"<<endl;
+    reset();
+    cout<<"1"<<endl;
     g2->resultBits.push_back(first);
     g2->resultBits.push_back(second);
+    cout<<"2"<<endl;
 
     for (auto i = 0; i <= SIGNALSIZE; i++) {
-        code.push_back(get_next_bit());
+        codeArray[1];
     }
 
+    cout<<"end generate"<<endl;
     return code;
 }
 
 
 uint8_t GoldCodeGenerator::get_next_bit() {
+    cout<<"get next";
     return shift(g1) ^ shift(g2);
 }
 
@@ -65,4 +68,16 @@ uint8_t GoldCodeGenerator::shift(ShiftRegister *shiftRegister) {
     shiftRegister->registerBits |= shiftBit << 9;
 
     return resultBit;
+}
+
+void GoldCodeGenerator::reset() {
+    g1->registerBits = 0b1111111111;
+    g2->registerBits = 0b1111111111;
+
+    g2->resultBits = {};
+}
+
+GoldCodeGenerator::~GoldCodeGenerator() {
+    delete g1;
+    delete g2;
 }
