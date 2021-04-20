@@ -1,7 +1,7 @@
 #include "Processor.h"
 
 Processor::Processor() {
-    vector<Satellite> new_vector;
+    vector<Satellite*> new_vector;
     satellites = new_vector;
     generator = new GoldCodeGenerator();
 }
@@ -12,18 +12,29 @@ vector<Satellite> Processor::decode() {
     vector<Satellite> result;
     createSatellites();
 
+    for (auto satellite : satellites) {
+        if (checkSatelliteSignal(satellite)) {
+            result.push_back(*satellite);
+        }
+    }
+
     return result;
 }
 
 void Processor::createSatellites() {
     for (auto i = 0; i < SATELLITE_COUNT; i++) {
-        Satellite satellite;
-        satellite.id = i + 1;
-        satellite.chipSequence = generator->generate(REGISTER_PAIRS[i][0], REGISTER_PAIRS[i][1]);
+        Satellite* satellite = new Satellite;
+        satellite->id = i + 1;
+        satellite->chipSequence = generator->generate(REGISTER_PAIRS[i][0], REGISTER_PAIRS[i][1]);
         satellites.push_back(satellite);
     }
 
     cout<<"end create";
+}
+
+bool Processor::checkSatelliteSignal(Satellite *satellite) {
+    uint8_t id = satellite->id;
+    return true;
 }
 
 bool Processor::loadFile(const char* filePath) {

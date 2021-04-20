@@ -45,7 +45,6 @@ uint16_t GoldCodeGenerator::applyBitmasks(vector<uint16_t> bitmasks, uint16_t re
     uint16_t resultBit = 0;
     uint16_t helpBit = 0;
 
-
     for (auto bitmask : bitmasks) {
          helpBit = registerBits & bitmask;
          while (helpBit >= 2) {

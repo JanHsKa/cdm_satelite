@@ -17,10 +17,11 @@ struct Satellite {
 class Processor {
 private:
     int8_t signalData[SIGNALSIZE];
-    vector<Satellite> satellites;
+    vector<Satellite*> satellites;
     GoldCodeGenerator* generator;
 
     void createSatellites();
+    bool checkSatelliteSignal(Satellite* satellite);
     
 public:
     Processor();
