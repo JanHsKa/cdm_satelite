@@ -12,8 +12,7 @@ GoldCodeGenerator::GoldCodeGenerator():g1(new ShiftRegister), g2(new ShiftRegist
 
 
 vector<uint8_t> GoldCodeGenerator::generate(uint16_t first, uint16_t second) {
-    vector<uint8_t> code(1023);
-    uint8_t* codeArray[1023]; 
+    vector<uint8_t> code;
     cout<<"generate"<<endl;
     reset();
     cout<<"1"<<endl;
@@ -22,16 +21,21 @@ vector<uint8_t> GoldCodeGenerator::generate(uint16_t first, uint16_t second) {
 
     g2->resultBits.push_back(second);
     cout<<"2"<<endl;
+    uint8_t safe;
 
     for (auto i = 0; i <= SIGNALSIZE; i++) {
-        codeArray[get_next_bit()];
+        safe = get_next_bit();
+        code.push_back(safe);
     }
     return code;
 }
 
 
 uint8_t GoldCodeGenerator::get_next_bit() {
-    return shift(g1) ^ shift(g2);
+    uint8_t shift1 = shift(g1);
+    uint8_t shift2 = shift(g2);
+
+    return shift1 ^ shift2;
 }
 
 
