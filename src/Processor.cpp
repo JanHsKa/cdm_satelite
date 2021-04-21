@@ -13,7 +13,7 @@ vector<Satellite> Processor::decode() {
     createSatellites();
 
     for (auto satellite : satellites) {
-        if (checkSatelliteSignal(satellite)) {
+        if (checkSatelliteSignal(satellite->id)) {
             result.push_back(*satellite);
         }
     }
@@ -25,16 +25,62 @@ void Processor::createSatellites() {
     for (auto i = 0; i < SATELLITE_COUNT; i++) {
         Satellite* satellite = new Satellite;
         satellite->id = i + 1;
+        satellite->t = DURATIONS[i];
         satellite->chipSequence = generator->generate(REGISTER_PAIRS[i][0], REGISTER_PAIRS[i][1]);
+        createSatelliteSignal(satellite);
         satellites.push_back(satellite);
     }
 
     cout<<"end create";
 }
 
-bool Processor::checkSatelliteSignal(Satellite *satellite) {
-    uint8_t id = satellite->id;
-    return true;
+void Processor::createSatelliteSignal(Satellite* satellite) {
+    for (auto bit : satellite->chipSequence) {
+        if (bit == 1) {
+            satellite->signal.push_back(1);
+        } else {
+            satellite->signal.push_back(-1);
+        }
+    }
+}
+
+bool Processor::checkSatelliteSignal(uint8_t satelliteId) {
+    cout<<"Checking Satellite: "<<(int)satelliteId<<endl;
+
+    for (auto i = 0; i < SIGNALSIZE; i++) {
+        if (checkSignal(i, satelliteId)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Processor::checkSignal(uint8_t start, uint8_t satelliteId) {
+    int checkSum = 0;
+    int index = start;
+
+    for (auto signalNumber : satellites[satelliteId - 1]->signal) {
+        checkSum += signalData[index % SIGNALSIZE] * signalNumber;
+        index += satellites[satelliteId - 1]->t;
+    } 
+
+    checkSum /= SIGNALSIZE;
+
+    switch (checkSum) {
+        case 1:
+            satellites[satelliteId - 1]->sentBit = 1;
+            return true;
+
+        case -1:
+            satellites[satelliteId - 1]->sentBit = 0;
+            return true;
+
+        default:
+            return false;
+    }
+
+    return false;
 }
 
 bool Processor::loadFile(const char* filePath) {

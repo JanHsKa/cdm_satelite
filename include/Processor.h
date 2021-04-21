@@ -10,8 +10,10 @@ using namespace std;
 struct Satellite {
     uint8_t sentBit;
     int id;
+    uint16_t t;
     uint16_t delta;
     vector<uint8_t> chipSequence;
+    vector<int8_t> signal;
 };
 
 class Processor {
@@ -21,7 +23,9 @@ private:
     GoldCodeGenerator* generator;
 
     void createSatellites();
-    bool checkSatelliteSignal(Satellite* satellite);
+    void createSatelliteSignal(Satellite* satellite);
+    bool checkSatelliteSignal(uint8_t satelliteId);
+    bool checkSignal(uint8_t start, uint8_t satelliteId);
     
 public:
     Processor();
