@@ -41,7 +41,7 @@ uint8_t GoldCodeGenerator::shift(ShiftRegister *shiftRegister) {
     return resultBit;
 }
 
-uint16_t GoldCodeGenerator::applyBitmasks(vector<uint16_t> bitmasks, uint16_t registerBits) {
+uint16_t GoldCodeGenerator::applyBitmasks(const vector<uint16_t> &bitmasks, uint16_t registerBits) {
     uint16_t resultBit = 0;
     uint16_t helpBit = 0;
 

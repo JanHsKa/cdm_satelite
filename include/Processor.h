@@ -26,6 +26,8 @@ private:
     void createSatelliteSignal(Satellite* satellite);
     bool checkSatelliteSignal(uint8_t satelliteId);
     bool checkSignal(uint8_t start, uint8_t satelliteId);
+
+    void printSatelliteSignal(uint8_t satelliteId);
     
 public:
     Processor();

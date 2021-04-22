@@ -11,6 +11,9 @@ Processor::Processor() {
 vector<Satellite> Processor::decode() {
     vector<Satellite> result;
     createSatellites();
+    /* for (auto i = 0; i < SIGNALSIZE; i++) {
+        printf("%d, ", signalData[i]);
+    } */
 
     for (auto satellite : satellites) {
         if (checkSatelliteSignal(satellite->id)) {
@@ -49,6 +52,7 @@ bool Processor::checkSatelliteSignal(uint8_t satelliteId) {
 
     for (auto i = 0; i < SIGNALSIZE; i++) {
         if (checkSignal(i, satelliteId)) {
+            satellites[satelliteId - 1]->delta = i;
             return true;
         }
     }
@@ -56,16 +60,29 @@ bool Processor::checkSatelliteSignal(uint8_t satelliteId) {
     return false;
 }
 
+void Processor::printSatelliteSignal(uint8_t satelliteId) {
+    printf("[");
+    for (auto i = 0; i < SIGNALSIZE; i++) {
+        printf("%d, ", satellites[satelliteId-1]->signal[i]);
+    }
+    printf("]\n");
+}
+
+
 bool Processor::checkSignal(uint8_t start, uint8_t satelliteId) {
     int checkSum = 0;
     int index = start;
 
     for (auto signalNumber : satellites[satelliteId - 1]->signal) {
         checkSum += signalData[index % SIGNALSIZE] * signalNumber;
-        index += satellites[satelliteId - 1]->t;
+        index++;
     } 
 
-    checkSum /= SIGNALSIZE;
+    if (checkSum > 500 || checkSum < -500) {
+        printf("Check Sum : %d \n", checkSum);
+
+    }
+
 
     switch (checkSum) {
         case 1:
