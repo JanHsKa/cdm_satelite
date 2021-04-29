@@ -5,3 +5,12 @@ build/
 .vs
 .vs/*
 CMakeSettings.json
+
+.fake
+.ionide
+CMakeFiles/*
+*vcxproj*
+*.cmake
+DartConfiguration.tcl
+CMakeCache.txt
+*.sln

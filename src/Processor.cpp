@@ -15,6 +15,10 @@ vector<Satellite> Processor::decode() {
         printf("%d, ", signalData[i]);
     } */
 
+    /* for (auto i = 0; i < SATELLITE_COUNT; i++) {
+        printSatelliteSignal(i+1);
+    } */
+
     for (auto satellite : satellites) {
         if (checkSatelliteSignal(satellite->id)) {
             result.push_back(*satellite);
@@ -34,7 +38,7 @@ void Processor::createSatellites() {
         satellites.push_back(satellite);
     }
 
-    cout<<"end create";
+    cout<<"end create\n";
 }
 
 void Processor::createSatelliteSignal(Satellite* satellite) {
@@ -61,6 +65,7 @@ bool Processor::checkSatelliteSignal(uint8_t satelliteId) {
 }
 
 void Processor::printSatelliteSignal(uint8_t satelliteId) {
+    printf("Stalleite: %d\n", satelliteId);
     printf("[");
     for (auto i = 0; i < SIGNALSIZE; i++) {
         printf("%d, ", satellites[satelliteId-1]->signal[i]);
@@ -68,21 +73,23 @@ void Processor::printSatelliteSignal(uint8_t satelliteId) {
     printf("]\n");
 }
 
-
 bool Processor::checkSignal(uint8_t start, uint8_t satelliteId) {
     int checkSum = 0;
     int index = start;
 
     for (auto signalNumber : satellites[satelliteId - 1]->signal) {
+        /* printf("checkSum: %d\n", checkSum);
+        printf("signaldata[%d] : %d\n", index % SIGNALSIZE, signalData[index % SIGNALSIZE]);
+        printf("signalNumber: %d\n\n", signalNumber); */
+
         checkSum += signalData[index % SIGNALSIZE] * signalNumber;
         index++;
     } 
 
-    if (checkSum > 500 || checkSum < -500) {
+    if (checkSum > 200 || checkSum < -200) {
         printf("Check Sum : %d \n", checkSum);
 
     }
-
 
     switch (checkSum) {
         case 1:

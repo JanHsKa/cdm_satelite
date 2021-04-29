@@ -1,12 +1,21 @@
 #include <iostream>
-#include "include/Controller.h"
+#include "Processor.h"
 
 using namespace std;
 
 int main(int argc, char** argv) {
     if (argc > 1) {
-        Controller controller = Controller(argv[1]);
-        controller.run();
+        Processor processor = Processor();
+
+        if (processor.loadFile(argv[1])) {
+        cout<<"loaded"<<endl;
+        vector<Satellite> results = processor.decode();
+        cout<<"decoded"<<endl;
+
+        for (auto satellite : results) {
+            cout<<"Satellite  "<<satellite.id<<" has sent bit "<<satellite.sentBit<<" (delta = "<<satellite.delta<<")"<<endl;
+        }
+    }
     } else {
         cout<<"No file was parsed"<<endl;
     }

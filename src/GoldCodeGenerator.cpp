@@ -2,8 +2,8 @@
 
 GoldCodeGenerator::GoldCodeGenerator():g1(new ShiftRegister), g2(new ShiftRegister) {
     g1->registerBits = 0b1111111111;
-    g1->shiftBits = {0b0010000000, 0b0010000000};
-    g1->resultBits = {0b1111111111};
+    g1->shiftBits = {0b0010000000, 0b0000000001};
+    g1->resultBits = {0b00000000001};
 
     g2->registerBits = 0b1111111111;
     g2->shiftBits = {0b0100000000, 0b0010000000, 0b0000010000, 0b0000000100, 0b0000000010, 0b0000000001};
