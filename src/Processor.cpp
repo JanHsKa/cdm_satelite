@@ -5,6 +5,7 @@ Processor::Processor() {
     satellites = new_vector;
     generator = new GoldCodeGenerator();
     createSatellites();
+    loopCount = 0;
 }
 
 
@@ -18,7 +19,8 @@ void Processor::decode() {
 }
 
 void Processor::printSatellite(Satellite* satellite) {
-    cout<<"Satellite  "<<satellite->id<<" has sent bit "<<satellite->sentBit<<" (delta = "<<satellite->delta<<")"<<endl;
+    printf("Satellite %*d has sent bit %d (delta = %d)\n", 2, satellite->id, 
+            satellite->sentBit, satellite->delta);
 }
 
 
@@ -45,8 +47,6 @@ void Processor::createSatelliteSignal(Satellite* satellite) {
 }
 
 bool Processor::checkSatelliteSignal(uint8_t satelliteId) {
-    cout<<"Checking Satellite: "<<(int)satelliteId<<endl;
-
     for (auto i = 0; i < SIGNALSIZE; i++) {
         if (checkSignal(i, satelliteId)) {
             satellites[satelliteId - 1]->delta = i;
@@ -57,33 +57,15 @@ bool Processor::checkSatelliteSignal(uint8_t satelliteId) {
     return false;
 }
 
-void Processor::printSatelliteSignal(uint8_t satelliteId) {
-    printf("Stalleite: %d\n", satelliteId);
-    printf("[");
-    for (auto i = 0; i < SIGNALSIZE; i++) {
-        printf("%d, ", satellites[satelliteId-1]->signal[i]);
-    }
-    printf("]\n");
-}
-
-bool Processor::checkSignal(uint8_t start, uint8_t satelliteId) {
+bool Processor::checkSignal(uint16_t start, uint8_t satelliteId) {
     int checkSum = 0;
     int index = start;
-
     for (auto signalNumber : satellites[satelliteId - 1]->signal) {
-        /* printf("checkSum: %d\n", checkSum);
-        printf("signaldata[%d] : %d\n", index % SIGNALSIZE, signalData[index % SIGNALSIZE]);
-        printf("signalNumber: %d\n\n", signalNumber); */
-
         checkSum += signalData[index % SIGNALSIZE] * signalNumber;
         index++;
     } 
 
-
-    if (checkSum > 200 || checkSum < -200) {
-       printf("Check Sum : %d \n", checkSum);
-
-    }
+    checkSum /= SIGNALSIZE;
 
     switch (checkSum) {
         case 1:

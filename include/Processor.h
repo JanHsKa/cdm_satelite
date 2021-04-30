@@ -21,11 +21,12 @@ private:
     int8_t signalData[SIGNALSIZE];
     vector<Satellite*> satellites;
     GoldCodeGenerator* generator;
+    int loopCount;
 
     void createSatellites();
     void createSatelliteSignal(Satellite* satellite);
     bool checkSatelliteSignal(uint8_t satelliteId);
-    bool checkSignal(uint8_t start, uint8_t satelliteId);
+    bool checkSignal(uint16_t start, uint8_t satelliteId);
 
     void printSatelliteSignal(uint8_t satelliteId);
     void printSatellite(Satellite* satellite);
