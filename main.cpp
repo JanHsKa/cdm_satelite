@@ -8,14 +8,8 @@ int main(int argc, char** argv) {
         Processor processor = Processor();
 
         if (processor.loadFile(argv[1])) {
-        cout<<"loaded"<<endl;
-        vector<Satellite> results = processor.decode();
-        cout<<"decoded"<<endl;
-
-        for (auto satellite : results) {
-            cout<<"Satellite  "<<satellite.id<<" has sent bit "<<satellite.sentBit<<" (delta = "<<satellite.delta<<")"<<endl;
+            processor.decode();
         }
-    }
     } else {
         cout<<"No file was parsed"<<endl;
     }

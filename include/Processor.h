@@ -28,9 +28,10 @@ private:
     bool checkSignal(uint8_t start, uint8_t satelliteId);
 
     void printSatelliteSignal(uint8_t satelliteId);
+    void printSatellite(Satellite* satellite);
     
 public:
     Processor();
-    vector<Satellite> decode();
+    void decode();
     bool loadFile(const char* filePath);
 };

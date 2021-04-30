@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.14)
 
 project(cdm_satellite
     VERSION 1.0
-    DESCRIPTION "embedded Software Labor Task 3"
+    DESCRIPTION "embedded Software Labor Task 3, c++ version"
     #LANGUAGES CXX
 )
 
 include(CTest)
-enable_testing()
+#enable_testing()
 
 set(CMAKE_BUILD_TYPE Debug)
 #set(CMAKE_CXX_STANDARD 17) 

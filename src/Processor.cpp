@@ -1,41 +1,36 @@
 #include "Processor.h"
 
 Processor::Processor() {
-    vector<Satellite*> new_vector;
+    vector<Satellite*> new_vector(SATELLITE_COUNT);
     satellites = new_vector;
     generator = new GoldCodeGenerator();
+    createSatellites();
 }
 
 
 
-vector<Satellite> Processor::decode() {
-    vector<Satellite> result;
-    createSatellites();
-    /* for (auto i = 0; i < SIGNALSIZE; i++) {
-        printf("%d, ", signalData[i]);
-    } */
-
-    /* for (auto i = 0; i < SATELLITE_COUNT; i++) {
-        printSatelliteSignal(i+1);
-    } */
-
+void Processor::decode() {
     for (auto satellite : satellites) {
         if (checkSatelliteSignal(satellite->id)) {
-            result.push_back(*satellite);
+           printSatellite(satellite);
         }
     }
-
-    return result;
 }
+
+void Processor::printSatellite(Satellite* satellite) {
+    cout<<"Satellite  "<<satellite->id<<" has sent bit "<<satellite->sentBit<<" (delta = "<<satellite->delta<<")"<<endl;
+}
+
 
 void Processor::createSatellites() {
     for (auto i = 0; i < SATELLITE_COUNT; i++) {
         Satellite* satellite = new Satellite;
         satellite->id = i + 1;
         satellite->t = DURATIONS[i];
-        satellite->chipSequence = generator->generate(REGISTER_PAIRS[i][0], REGISTER_PAIRS[i][1]);
+        satellite->chipSequence = vector<uint8_t>(SIGNALSIZE);
+        generator->generate(satellite->chipSequence, REGISTER_PAIRS[i][0], REGISTER_PAIRS[i][1]);
         createSatelliteSignal(satellite);
-        satellites.push_back(satellite);
+        satellites[i] = satellite;
     }
 
     cout<<"end create\n";

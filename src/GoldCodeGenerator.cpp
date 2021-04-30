@@ -10,17 +10,14 @@ GoldCodeGenerator::GoldCodeGenerator():g1(new ShiftRegister), g2(new ShiftRegist
     g2->resultBits = {};
 }
 
-vector<uint8_t> GoldCodeGenerator::generate(uint16_t first, uint16_t second) {
-    vector<uint8_t> code;
+void GoldCodeGenerator::generate(vector<uint8_t> &chipsequence, uint16_t first, uint16_t second) {
     reset();
     g2->resultBits.push_back(1 << (10 - first));
     g2->resultBits.push_back(1 << (10 - second));
 
     for (auto i = 0; i <= SIGNALSIZE; i++) {
-        code.push_back(get_next_bit());
+        chipsequence[i] = get_next_bit();
     }
-
-    return code;
 }
 
 uint8_t GoldCodeGenerator::get_next_bit() {
