@@ -32,8 +32,6 @@ void Processor::createSatellites() {
         createSatelliteSignal(satellite);
         satellites[i] = satellite;
     }
-
-    cout<<"end create\n";
 }
 
 void Processor::createSatelliteSignal(Satellite* satellite) {
@@ -81,8 +79,9 @@ bool Processor::checkSignal(uint8_t start, uint8_t satelliteId) {
         index++;
     } 
 
+
     if (checkSum > 200 || checkSum < -200) {
-        printf("Check Sum : %d \n", checkSum);
+       printf("Check Sum : %d \n", checkSum);
 
     }
 

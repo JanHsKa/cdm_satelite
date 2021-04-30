@@ -15,7 +15,7 @@ void GoldCodeGenerator::generate(vector<uint8_t> &chipsequence, uint16_t first, 
     g2->resultBits.push_back(1 << (10 - first));
     g2->resultBits.push_back(1 << (10 - second));
 
-    for (auto i = 0; i <= SIGNALSIZE; i++) {
+    for (auto i = 0; i < SIGNALSIZE; i++) {
         chipsequence[i] = get_next_bit();
     }
 }
